@@ -1,0 +1,11 @@
+{
+  "name": "math-rush-ably",
+  "type": "module",
+  "dependencies": {
+    "ably": "^2.5.0"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0",
+    "@vitejs/plugin-react": "^4.2.1"
+  }
+}
