@@ -36,10 +36,9 @@ export default function App(){
     channelRef.current = channel;
     // presence = who is in room
     await channel.presence.enter({ name });
-    channel.presence.subscribe(() => {
-      channel.presence.get((err, members)=>{
-        if(!err) setPlayers(members.map(m=>m.data));
-      });
+    channel.presence.subscribe(async () => {
+      const members = await channel.presence.get();
+      setPlayers(members.map(m=>m.data));
     });
     channel.subscribe('answered', (msg)=> setOppProg(msg.data.idx+1));
     channel.subscribe('finished', (msg)=> { setWinner(msg.data.winner); setScreen('end'); });
@@ -55,18 +54,16 @@ export default function App(){
     const channel = ably.channels.get(`math-rush:${code}`);
     channelRef.current = channel;
     await channel.presence.enter({ name });
-    channel.presence.subscribe(() => {
-      channel.presence.get((err, members)=>{
-        if(!err) {
-          const mem = members.map(m=>m.data);
-          setPlayers(mem);
-          if(mem.length===2 && screen==='waiting') setTimeout(()=>startGame(), 500);
-        }
-      });
+    channel.presence.subscribe(async () => {
+      const members = await channel.presence.get();
+      const mem = members.map(m=>m.data);
+      setPlayers(mem);
+      if(mem.length===2) setTimeout(()=>startGame(), 500);
     });
-    channel.presence.get((err, members)=>{
-      if(!err) setPlayers(members.map(m=>m.data));
-    });
+    {
+      const members = await channel.presence.get();
+      setPlayers(members.map(m=>m.data));
+    }
     channel.subscribe('answered', (msg)=> {
       if(msg.data.clientId !== name) setOppProg(msg.data.idx+1);
     });
