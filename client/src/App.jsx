@@ -99,17 +99,12 @@ export default function App(){
       {screen==='lobby'&&(
         <div className="max-w-[480px] mx-auto p-6 mt-10">
           <h2 className="text-[54px] leading-[0.9] font-black">WHO'S<br/>FASTER?</h2>
-          <p className="text-zinc-400 mt-4">Vercel Serverless + Ably. Works Nigeria → USA.</p>
           <input value={name} onChange={e=>setName(e.target.value)} placeholder="YOUR NAME" className="w-full mt-8 bg-zinc-900 border border-zinc-800 p-4 outline-none focus:border-[#CCFF00]"/>
           <div className="grid grid-cols-2 gap-3 mt-4">
             <button onClick={createRoom} className="bg-[#CCFF00] text-black p-4 font-bold">CREATE ROOM</button>
             <div className="flex"><input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} placeholder="CODE" className="w-full bg-zinc-900 border border-zinc-800 p-4 outline-none"/><button onClick={joinRoom} className="bg-white text-black px-6 font-bold">JOIN</button></div>
           </div>
           <div className="mt-8 text-[11px] text-zinc-600 border border-zinc-900 p-3 leading-relaxed">
-            Setup:<br/>
-            1. ably.com → create app → copy API Key<br/>
-            2. Vercel → Settings → Env Vars → ABLY_API_KEY=your_key<br/>
-            3. Deploy. No other servers needed.
           </div>
         </div>
       )}
